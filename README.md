@@ -1,4 +1,4 @@
 gopj
 ====
 
-It's my graduation project 
+It's my graduation project that use Golang

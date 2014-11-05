@@ -1,13 +1,17 @@
 package main
 
 import (
-	"app"
+	"controller"
+	"github.com/hoisie/web"
+	"net/http"
 )
 
-func hello(val string) string {
-	return "This is test"
+func initRouter() {
+	web.Get("/static", http.FileServer(http.Dir("/Users/David/gopj")))
+	web.Get("/login", controller.GetLogin)
+	web.Post("/login", controller.DoLogin)
 }
 func main() {
-	app.Run(":6070")
-	app.Get("/", hello)
+	initRouter()
+	web.Run(":6070")
 }

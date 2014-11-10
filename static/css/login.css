@@ -5,3 +5,20 @@
   top: 200px;
   margin: 0 auto;
 }
+.my-content {
+	margin: 0 auto;
+
+}
+.my-content .panel {
+	display: inline-block;
+	width: 250px;
+	margin-left: 50px;
+}
+.my-content .panel-body {
+	height:400px;
+}
+.my-content .panel-body div{
+	margin-bottom: 30px;
+	width: 90px;
+
+}

@@ -46,7 +46,8 @@ func FindUser(email, md5Pwd string) (bool, []string) {
 		log.Fatal(_err)
 	default:
 		if md5Pwd == _pwd {
-			return true, jsonInfo
+			userInfoArr := []string{_id, _username}
+			return true, userInfoArr
 		}
 	}
 

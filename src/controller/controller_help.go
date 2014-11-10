@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"crypto/md5"
+	"fmt"
 	"github.com/hoisie/web"
 	"html/template"
 	"log"
@@ -16,4 +18,8 @@ func render(ctx *web.Context, htmlName string, data interface{}) {
 		serverWrong(ctx)
 	}
 	t.Execute(ctx.ResponseWriter, data)
+}
+
+func encryptPwd(pwd string) string {
+	return fmt.Sprintf("%x", md5.Sum([]byte(pwd)))
 }

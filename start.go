@@ -10,7 +10,8 @@ func initRouter() {
 	web.Get("/static", http.FileServer(http.Dir("/Users/David/gopj")))
 	web.Get("/login", controller.GetLogin)
 	web.Post("/login", controller.DoLogin)
-	web.Get("/index", controller.GetHome)
+	web.Get("/logout", controller.LogOut)
+	web.Get("/", controller.GetHome)
 }
 func main() {
 	initRouter()

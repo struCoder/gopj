@@ -30,7 +30,7 @@ func saveUser(username string, pwd string, isRight int) bool {
 	return true
 }
 
-func FindUser(email, md5Pwd string) (bool, []string) {
+func FindUser(email, md5Pwd string) (bool, map[string]UserInfo) {
 	var _id, _username, _pwd string
 	db, err := sql.Open("mysql", "root:123456@/gopj")
 	defer db.Close()
@@ -46,8 +46,9 @@ func FindUser(email, md5Pwd string) (bool, []string) {
 		log.Fatal(_err)
 	default:
 		if md5Pwd == _pwd {
-			userInfoArr := []string{_id, _username}
-			return true, userInfoArr
+			userInfoStruct := make(map[string]UserInfo)
+			userInfoStruct["user"] = UserInfo{_id, _username}
+			return true, userInfoStruct
 		}
 	}
 

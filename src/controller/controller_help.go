@@ -7,6 +7,7 @@ import (
 	"github.com/hoisie/web"
 	"html/template"
 	"log"
+	"regexp"
 )
 
 //服务器错误
@@ -34,4 +35,27 @@ func returnJson(ctx *web.Context, input interface{}) {
 	b, _ := json.Marshal(input)
 	ctx.SetHeader("Content-Type", "application/json; charset=utf-8", true)
 	ctx.WriteString(string(b))
+}
+
+//判断是否用户已经登录
+func checkLogin(ctx *web.Context) bool {
+	session, _ := store.Get(ctx.Request, "user")
+	if session.Values["userId"] != nil {
+		return true
+	}
+	return false
+}
+
+//判读是否为Email
+func isEmail(email string) bool {
+	regEmail := regexp.MustCompile("^\\w+@\\w+\\.\\w{2,4}$")
+	return regEmail.MatchString(email)
+}
+
+// 判断字符串是否为空
+func isEmpty(str string) bool {
+	if len(str) < 1 {
+		return true
+	}
+	return false
 }

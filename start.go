@@ -19,8 +19,16 @@ func initRouter() {
 
 	//投诉管理
 	web.Get("/complain", controller.GetComplain)
-	web.Post("/complain", controller.AddComplain)
-	web.Post("/complain", controller.DelComplain)
+	// web.Post("/complain/add", controller.AddComplain)
+	// web.Post("/complain/del", controller.DelComplain)
+	// web.Get("/complain/status", controller.StatusComplain)
+	// web.Post("/complain/deal", controller.DealComplain)
+
+	//系统管理
+	// web.Get("/admin", controller.GetAdmin)
+	// web.Post("/admin/add", controller.AddAdmin)
+	// web.Get("/admin/profile", controller.GetAdminProfile)
+	// web.Post("/admin/del", controller.DelAdmin)
 }
 func main() {
 	initRouter()

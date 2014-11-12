@@ -59,3 +59,8 @@ func isEmpty(str string) bool {
 	}
 	return false
 }
+
+// isAdmin
+func isAdmin(ctx *web.Context) bool {
+	return false
+}

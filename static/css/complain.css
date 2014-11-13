@@ -1,0 +1,17 @@
+body {
+  font-size: 14px;
+  font-family: 'Helvetica Neue',Arial,'Liberation Sans',FreeSans,'Hiragino Sans GB',sans-serif;
+  text-rendering: optimizeLegibility;
+  line-height: 1.2;
+  font: 13px/20px 'Helvetica Neue',Arial,'Liberation Sans',FreeSans,'Hiragino Sans GB',sans-serif;
+  color: #444;
+  background: none repeat scroll 0 0 #F1F1F1;
+}
+.main-box {
+  margin: 20px auto;
+  box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+  max-width: 960px;
+  overflow: hidden;
+  height: 800px;
+  background-color: #fff;
+}

@@ -17,12 +17,12 @@ func serverWrong(ctx *web.Context) {
 
 //模板渲染
 func render(ctx *web.Context, htmlName string, data interface{}) {
-	t, err := template.ParseFiles(viewsDir + htmlName + htmlExt)
+	t := template.Must(template.ParseFiles(viewsDir+htmlName+htmlExt, "views/header.tmpl", "views/footer.tmpl"))
+	err := t.Execute(ctx.ResponseWriter, data)
 	if err != nil {
 		log.Fatal(err)
 		serverWrong(ctx)
 	}
-	t.Execute(ctx.ResponseWriter, data)
 }
 
 //返回md5加密后的字符串

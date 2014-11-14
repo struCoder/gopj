@@ -11,5 +11,5 @@ echo "should copy: export GOPATH=${currentPath}"
 echo "         and export PATH=\$PATH:\$GOPATH/bin"
 echo "to you terminal"
 
-echo "starting go server...."
+echo "starting go server......"
 go run ${currentPath}/start.go

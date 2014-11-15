@@ -10,13 +10,13 @@ import (
 	"regexp"
 )
 
-//服务器错误
+//服务器错误友好提示
 func serverWrong(ctx *web.Context) {
 	ctx.Abort(500, "sory! server wrong")
 }
 
 //模板渲染
-func render(ctx *web.Context, htmlName string, data interface{}) {
+func render(ctx *web.Context, htmlName string, data map[string]interface{}) {
 	t := template.Must(template.ParseFiles(viewsDir+htmlName+htmlExt, "views/header.tmpl", "views/footer.tmpl"))
 	err := t.Execute(ctx.ResponseWriter, data)
 	if err != nil {
@@ -60,7 +60,17 @@ func isEmpty(str string) bool {
 	return false
 }
 
-// isAdmin
+// 判断是否为管理员
 func isAdmin(ctx *web.Context) bool {
 	return false
+}
+
+//得到当前用户
+func getCurrentUser(ctx *web.Context) map[string]string {
+	session, _ := store.Get(ctx.Request, "user")
+	currentUser := make(map[string]string)
+	currentUser["userId"] = (session.Values["userId"]).(string)
+	currentUser["userName"] = (session.Values["userName"]).(string)
+	return currentUser
+
 }

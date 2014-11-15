@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>系统登录</title>
-  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/login.css">
-</head>
-<body>
+{{template "header"}}
+{{define "Title"}}登入{{end}}
+{{define "Css"}}/css/login.css{{end}}
 <div class="main">
   <div class="login-box">
     <div class="panel panel-primary">
@@ -28,8 +23,7 @@
     </div>
   </div>
 </div>
-</body>
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+{{template "footer"}}
 <script type="text/javascript">
   var doRequest = function(data) {
     var $showSpan = $('#showInfo')
@@ -53,4 +47,3 @@
     doRequest(data)
   });
 </script>
-</html>

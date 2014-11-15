@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>业主投诉</title>
-  <link rel="stylesheet" type="text/css" href="/css/complain.css">
-</head>
-<body>
+{{template "header" .}}
+{{define "Title"}}业主投诉{{end}}
+{{define "Css"}}/css/complain.css{{end}}
 <div class="main-box">
-  {{.Name}}
+  {{.user.Name}}
 </div>
-</body>
-</html>
+{{template "footer"}}

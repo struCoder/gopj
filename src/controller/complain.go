@@ -5,8 +5,9 @@ import (
 	"github.com/hoisie/web"
 )
 
-type test struct {
+type te struct {
 	Name string
+	Id   string
 }
 
 func GetComplain(ctx *web.Context) {
@@ -14,6 +15,8 @@ func GetComplain(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-	te := test{"David"}
-	render(ctx, "complaint/index", te)
+	u := te{"david", "22"}
+	render(ctx, "complaint/index", map[string]interface{}{
+		"user": u,
+	})
 }

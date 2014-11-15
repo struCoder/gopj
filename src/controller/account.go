@@ -7,12 +7,6 @@ import (
 	"model"
 )
 
-//存储用户登陆成功与否
-type loginStatus struct {
-	Code int32
-	Msg  string
-}
-
 var store = sessions.NewCookieStore([]byte(secret))
 
 func GetLogin(ctx *web.Context) {

@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/hoisie/web"
 )
 
@@ -10,8 +10,7 @@ func GetHome(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 	}
 	currentUser := getCurrentUser(ctx)
-	fmt.Println(currentUser["userId"])
 	render(ctx, "index", map[string]interface{}{
-		"user": "David",
+		"user": currentUser,
 	})
 }

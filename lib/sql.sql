@@ -20,11 +20,15 @@ CREATE TABLE `gopj`.`admin` (
 PRIMARY KEY (`id`));
 
 ------------- 投诉表 -------------
-CREATE TABLE `gopj`.`complain` (
+CREATE TABLE `gopj`.`complaint` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `complain_name` VARCHAR(255) NULL,
-  `complain_status` VARCHAR(45) NULL,
-  `deal_person` VARCHAR(45) NULL,
-  `is_cancel` VARCHAR(45) NULL,
-  `report_person_name` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `phone` VARCHAR(45) NULL,
+  `be_complainted` VARCHAR(45) NULL, ----被投诉人或群里
+  `address` VARCHAR(255) NULL,       ----被投诉人地址 
+  `reason` VARCHAR(255) NULL,
+  `deal_person` VARCHAR(45) NULL,    ----处理人
+  `status` VARCHAR(45) NULL,         ----状态
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
   PRIMARY KEY (`id`));

@@ -7,6 +7,7 @@ import (
 	"github.com/hoisie/web"
 	"html/template"
 	"log"
+	"model"
 	"regexp"
 )
 
@@ -66,11 +67,13 @@ func isAdmin(ctx *web.Context) bool {
 }
 
 //得到当前用户
-func getCurrentUser(ctx *web.Context) map[string]string {
+func getCurrentUser(ctx *web.Context) model.UserInfo {
 	session, _ := store.Get(ctx.Request, "user")
-	currentUser := make(map[string]string)
-	currentUser["userId"] = (session.Values["userId"]).(string)
-	currentUser["userName"] = (session.Values["userName"]).(string)
-	return currentUser
-
+	// currentUser := make(map[string]string)
+	var user model.UserInfo
+	user.Id = (session.Values["userId"]).(string)
+	user.Name = (session.Values["userName"]).(string)
+	//其实在这更安全的方法就是得到用户Id后进行一次数据库查询,
+	//目前就先这样吧
+	return user
 }

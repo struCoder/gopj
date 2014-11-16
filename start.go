@@ -18,7 +18,8 @@ func initRouter() {
 	web.Get("/", controller.GetHome)
 
 	//投诉管理
-	web.Get("/complain", controller.GetComplain)
+	web.Get("/complaint", controller.GetComplain)
+	web.Get("/complaint/add", controller.AddComplain)
 	// web.Post("/complain/add", controller.AddComplain)
 	// web.Post("/complain/del", controller.DelComplain)
 	// web.Get("/complain/status", controller.StatusComplain)

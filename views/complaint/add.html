@@ -1,0 +1,42 @@
+{{template "header" .}}
+{{define "Title"}}增加投诉{{end}}
+{{define "Css"}}/css/complain.css{{end}}
+<div class="main-box">
+  <div class="add-complaint">
+    <form role="form">
+      <div class="form-group">
+        <label for="inputName">投诉人</label>
+        <input type="text" class="form-control" id="inputName" placeholder="投诉人姓名">
+      </div>
+      <div class="form-group">
+        <label for="inputTel">投诉人联系电话</label>
+        <input type="text" class="form-control" id="inputTel" placeholder="电话号码">
+      </div>
+
+      <div class="form-group">
+        <label for="beComplaintName">被投诉人姓名或群体</label>
+        <input type="text" class="form-control" id="beInputName" placeholder="被投诉人姓名或群体">
+      </div>
+      <div class="form-group">
+        <label for="beComplaintHome">被投诉人方位</label>
+        <input type="text" class="form-control" id="beComplaintHome" placeholder="被投诉人住址">
+      </div>
+
+      <div class="form-group">
+        <label for="inputReason">投诉原因</label>
+        <textarea class="form-control" id="inputReason" placeholder="投诉原因" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="dealPerson">受理人</label>
+        <input type="text" class="form-control" id="dealPerson" placeholder="受理人">
+      </div>
+      <div class="form-group">
+        <div>
+          <button type="button" class="btn btn-primary btn-block" id="submit">投诉</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{template "footer"}}

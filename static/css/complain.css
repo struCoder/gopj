@@ -24,3 +24,10 @@ body {
   resize: none;
   overflow: auto;
 }
+
+.add-complaint .show-info {
+  display: none;
+}
+.success {
+  display: block;
+}

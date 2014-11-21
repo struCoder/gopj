@@ -11,6 +11,12 @@ import (
 	"regexp"
 )
 
+//存储用户登陆成功与否
+type loginStatus struct {
+	Code int32
+	Msg  string
+}
+
 //服务器错误友好提示
 func serverWrong(ctx *web.Context) {
 	ctx.Abort(500, "sory! server wrong")

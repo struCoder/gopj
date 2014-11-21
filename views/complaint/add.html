@@ -35,8 +35,48 @@
         <div>
           <button type="button" class="btn btn-primary btn-block" id="submit">投诉</button>
         </div>
+        <div class="alert alert-success show-info" id="text-show-info" role="alert"></div>
       </div>
     </form>
   </div>
 </div>
 {{template "footer"}}
+<script>
+  (function(){
+    function complain(){};
+    complain.prototype.init = function(){
+      this.$inputName = $('#inputName');
+      this.$inputTel = $('#inputTel');
+      this.$beInputName = $('#beInputName');
+      this.$beComplaintHome = $('#beComplaintHome');
+      this.$inputReason = $('#inputReason');
+      this.$dealPerson = $('#dealPerson');
+      this.$textShowInfo = $('#text-show-info');
+    };
+
+    complain.prototype.doRequest = function() {
+      var self = this
+      data = {
+        inputName: this.$inputName.val(),
+        inputTel: this.$inputTel.val(),
+        beInputName: this.$beInputName.val(),
+        beComplaintHome: this.$beComplaintHome.val(),
+        inputReason: this.$inputReason.val(),
+        dealPerson: this.$dealPerson.val(),
+      }
+      $.post('/complaint/add', data, function(result) {
+        if (result.Code === 0) {
+          return self.$textShowInfo.innerText("提交成功")
+        }
+        slef.$textShowInfo.innerText(result.Msg)
+      });
+    };
+
+    var ins = new complain();
+    ins.init();
+    $('#submit').click(function() {
+      ins.doRequest();
+    });
+  }());
+  
+</script>

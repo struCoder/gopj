@@ -10,9 +10,9 @@ func GetComplain(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-
-	render(ctx, "complaint/index", map[string]interface{}{
-		"user": "sdfs",
+	currentUser := getCurrentUser(ctx)
+	render(ctx, "complaint/add", map[string]interface{}{
+		"user": currentUser,
 	})
 }
 
@@ -21,5 +21,10 @@ func AddComplain(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-	render(ctx, "complaint/add", nil)
+	inputName := ctx.Params["inputName"]
+	inputTel := ctx.Params["inputTel"]
+	beInputName := ctx.Params["beInputName"]
+	beComplaintHome := ctx.Params["beComplaintHome"]
+	inputReason := ctx.Params["inputReason"]
+	dealPerson := ctx.Params["dealPerson"]
 }

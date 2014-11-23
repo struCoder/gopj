@@ -11,7 +11,12 @@ import (
 	"regexp"
 )
 
-//存储用户登陆成功与否
+/**
+  * 存储用户登陆成功与否
+	* 0 fail
+	* 1 success
+*/
+
 type loginStatus struct {
 	Code int32
 	Msg  string

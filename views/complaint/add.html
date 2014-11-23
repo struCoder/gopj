@@ -3,8 +3,15 @@
 {{define "Css"}}/css/complain.css{{end}}
 <div class="main-box">
   <div class="add-complaint">
-    <form role="form">
+    <div class="alert alert-success show-info" role="alert">
+      <button type="button" class="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <span id="text-show-info"></span>
+    </div>
+    <form role="form" class="add-form">
       <div class="form-group">
+
         <label for="inputName">投诉人</label>
         <input type="text" class="form-control" id="inputName" placeholder="投诉人姓名">
       </div>
@@ -35,7 +42,6 @@
         <div>
           <button type="button" class="btn btn-primary btn-block" id="submit">投诉</button>
         </div>
-        <div class="alert alert-success show-info" id="text-show-info" role="alert"></div>
       </div>
     </form>
   </div>
@@ -45,6 +51,7 @@
   (function(){
     function complain(){};
     complain.prototype.init = function(){
+      this.$input = $(':input')
       this.$inputName = $('#inputName');
       this.$inputTel = $('#inputTel');
       this.$beInputName = $('#beInputName');
@@ -52,6 +59,7 @@
       this.$inputReason = $('#inputReason');
       this.$dealPerson = $('#dealPerson');
       this.$textShowInfo = $('#text-show-info');
+      this.$showInfoDiv = $('.show-info')
     };
 
     complain.prototype.doRequest = function() {
@@ -64,11 +72,13 @@
         inputReason: this.$inputReason.val(),
         dealPerson: this.$dealPerson.val(),
       }
+      self.$input.val('') //clear
       $.post('/complaint/add', data, function(result) {
         if (result.Code === 0) {
-          return self.$textShowInfo.innerText("提交成功")
+          self.$showInfoDiv.css('display', 'block');
+          return self.$textShowInfo.text(result.Msg)
         }
-        slef.$textShowInfo.innerText(result.Msg)
+        slef.$textShowInfo.text(result.Msg)
       });
     };
 
@@ -77,6 +87,10 @@
     $('#submit').click(function() {
       ins.doRequest();
     });
+
+    $('.show-info .close').click(function() {
+      $('.show-info').css('display', 'none');
+    })
   }());
   
 </script>

@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
@@ -28,4 +29,30 @@ func SaveComplaint(inputName, inputTel, beInputName, beComplaintHome, inputReaso
 	defer stmt.Close()
 	stmt.Exec(inputName, inputTel, beInputName, beComplaintHome, inputReason, dealPerson)
 	return true, ""
+}
+
+func GetMsgByLimit(start, end int) map[int]ComplaintMsg {
+	db := getDb()
+	defer db.Close()
+	i := 1
+	rows, err := db.Query("select id, name, phone, be_complainted, reason, status from complaint limit ?, ?", start, end)
+	defer rows.Close()
+	if err != nil || err == sql.ErrNoRows {
+		log.Fatal(err)
+		return nil
+	}
+	msgMap := make(map[int]ComplaintMsg)
+	comMsgStruct := ComplaintMsg{}
+	for rows.Next() {
+		rows.Scan(&comMsgStruct.Id, &comMsgStruct.Name, &comMsgStruct.Phone, &comMsgStruct.BeComplaint, &comMsgStruct.Reason, &comMsgStruct.Status)
+		msgMap[i] = comMsgStruct
+		i++
+	}
+
+	iterErr := rows.Err() // get any error encountered during iteration
+	if iterErr != nil {
+		log.Fatal(iterErr)
+		return nil
+	}
+	return msgMap
 }

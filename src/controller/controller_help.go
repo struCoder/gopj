@@ -9,6 +9,7 @@ import (
 	"log"
 	"model"
 	"regexp"
+	"strconv"
 )
 
 /**
@@ -20,6 +21,14 @@ import (
 type loginStatus struct {
 	Code int32
 	Msg  string
+}
+
+/**
+	* 存储数据数量, 便于分页
+  *
+*/
+type count struct {
+	Num string
 }
 
 //服务器错误友好提示
@@ -62,6 +71,19 @@ func checkLogin(ctx *web.Context) bool {
 func isEmail(email string) bool {
 	regEmail := regexp.MustCompile("^\\w+@\\w+\\.\\w{2,4}$")
 	return regEmail.MatchString(email)
+}
+
+//判断是否为数字
+
+func isNum(page string) bool {
+	regNum := regexp.MustCompile("^\\d$")
+	return regNum.MatchString(page)
+}
+
+//字符串转为int
+func parseInt(pageStr string) int {
+	inted, _ := strconv.Atoi(pageStr)
+	return inted
 }
 
 // 判断字符串是否为空

@@ -1,9 +1,59 @@
 {{template "header" .}}
-{{define "Title"}}撤销投诉{{end}}
+{{define "Title"}}撤消投诉{{end}}
 {{define "Css"}}/css/complain.css{{end}}
 
 <div class="main-box">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>投诉人姓名</th>
+          <th>投诉人电话</th>
+          <th>被投诉人</th>
+          <th>投诉原因</th>
+          <th>处理状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range $index, $element := .complaint}}
+          <tr>
+            <td>{{$index}}</td>
+            <td>{{$element.Name}}</td>
+            <td>{{$element.Phone}}</td>
+            <td>{{$element.BeComplaint}}</td>
+            <td>{{$element.Reason}}</td>
+            {{if eq $element.Status "0"}}
+              <td class="danger">暂未处理</td>
+            {{else if eq $element.Status "1"}}
+              <td class="info">正在处理</td>
+            {{else}}
+              <td class="success">已经解决</td>
+            {{end}}
+            <td>
+             <button type="button" class="btn btn-default btn-block" current-data={{$element.Id}}>
+               撤  消
+             </button>
+            </td>
+          </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+  <div class="paging">
+    <nav>
+      <ul class="pagination">
+        <li><a href="/complaint/del/query/?page=0">&laquo;</a></li>
+        <li><a href="/complaint/del/query/?page=1">1</a></li>
+        <li><a href="/complaint/del/query/?page=2">2</a></li>
+        <li><a href="/complaint/del/query/?page=3">3</a></li>
+         <li><a href="/complaint/del/query/?page=4">4</a></li>
+          <li><a href="/complaint/del/query/?page=5">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+      </ul>
+    </nav>
+  </div>
   
 </div>
-
 {{template "footer"}}

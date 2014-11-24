@@ -48,7 +48,19 @@ func DelComplain(ctx *web.Context) {
 		return
 	}
 	currentUser := getCurrentUser(ctx)
+	complaintMsgMap := model.GetMsgByLimit(0, 10)
+
 	render(ctx, "complaint/del", map[string]interface{}{
-		"user": currentUser,
+		"user":      currentUser,
+		"complaint": complaintMsgMap,
 	})
+}
+
+func PagingComplain(ctx *web.Context) {
+	currentPage := ctx.Params["page"]
+	if !isNum(currentPage) {
+		ctx.Abort(400, "非法访问")
+	}
+	// pageInt := parseInt(currentPage) + 10
+	// complaintMsgMap := model.GetMsgByLimit()
 }

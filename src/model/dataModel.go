@@ -5,3 +5,12 @@ type UserInfo struct {
 	Id   string
 	Name string
 }
+
+type ComplaintMsg struct {
+	Id          int
+	Name        string
+	Phone       string
+	BeComplaint string
+	Reason      string
+	Status      string
+}

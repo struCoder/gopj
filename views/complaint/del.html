@@ -31,7 +31,7 @@
               <td class="success">已经解决</td>
             {{end}}
             <td>
-             <button type="button" class="btn btn-default btn-block" current-data={{$element.Id}}>
+             <button type="button" class="btn btn-default btn-block" current-data={{$element.Id}} data-toggle="modal" data-target="#myModal">
                撤  消
              </button>
             </td>
@@ -40,19 +40,66 @@
       </tbody>
     </table>
   </div>
+
+  <!--myModal-->
+  <div class="modal fade" id="myModal" tabinde="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">关闭</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">删除确认</h4>
+        </div>
+        <div class="modal-body">
+          <h4>是否要删除此条投诉?</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="submitDel" data-dismiss="modal">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="paging">
     <nav>
-      <ul class="pagination">
-        <li><a href="/complaint/del/query/?page=0">&laquo;</a></li>
-        <li><a href="/complaint/del/query/?page=1">1</a></li>
-        <li><a href="/complaint/del/query/?page=2">2</a></li>
-        <li><a href="/complaint/del/query/?page=3">3</a></li>
-         <li><a href="/complaint/del/query/?page=4">4</a></li>
-          <li><a href="/complaint/del/query/?page=5">5</a></li>
-        <li><a href="#">&raquo;</a></li>
+      <ul class="pager">
+        {{if lt .start 1}}
+          <li class="previous disabled"><a href="/complaint/del/query/?page={{.start}}">&larr; 上一页</a></li>
+        {{else}}
+          <li class="previous"><a href="/complaint/del/query/?page={{.start}}">&larr; 上一页</a></li>
+        {{end}}
+        {{if gt .end .count}}
+          <li class="next disabled"><a href="/complaint/del/query/?page={{.end}}">下一页 &rarr;</a></li>  
+        {{else}}
+          <li class="next"><a href="/complaint/del/query/?page={{.end}}">下一页 &rarr;</a></li>
+        {{end}}
       </ul>
     </nav>
   </div>
-  
 </div>
 {{template "footer"}}
+<script>
+  var doRequest = function(data, callback) {
+    $.post('/complaint/del', data, function(result) {
+      if (result.Code !== 1) {
+        return alert("删除失败: "+result.Msg)
+      }
+      callback(result.Msg)
+    });
+  }
+  $('button').click(function() {
+    var self = this;
+    var currentId = $(this).attr("current-data")
+    $('#submitDel').click(function() {
+      var data = {
+        "id": currentId
+      }
+      doRequest(data, function(msg) {
+        console.log(msg)
+        $(self).text(msg).attr("current-data","0")
+      });
+    });
+  });
+</script>

@@ -23,6 +23,11 @@ type loginStatus struct {
 	Msg  string
 }
 
+type dealStatus struct {
+	Code int32
+	Msg  string
+}
+
 //服务器错误友好提示
 func serverWrong(ctx *web.Context) {
 	ctx.Abort(500, "sory! server wrong")
@@ -72,7 +77,7 @@ func isEmail(email string) bool {
 //判断是否为数字
 
 func isNum(page string) bool {
-	regNum := regexp.MustCompile("^\\d$")
+	regNum := regexp.MustCompile("\\d")
 	return regNum.MatchString(page)
 }
 

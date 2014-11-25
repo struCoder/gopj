@@ -31,15 +31,17 @@ func SaveComplaint(inputName, inputTel, beInputName, beComplaintHome, inputReaso
 	return true, ""
 }
 
-func GetMsgByLimit(start, end int) map[int]ComplaintMsg {
+func GetMsgByLimit(start, end int) (map[int]ComplaintMsg, int) {
 	db := getDb()
 	defer db.Close()
 	i := 1
+	var Num int
+	db.QueryRow("select count(*) from complaint").Scan(&Num)
 	rows, err := db.Query("select id, name, phone, be_complainted, reason, status from complaint limit ?, ?", start, end)
 	defer rows.Close()
 	if err != nil || err == sql.ErrNoRows {
 		log.Fatal(err)
-		return nil
+		return nil, 0
 	}
 	msgMap := make(map[int]ComplaintMsg)
 	comMsgStruct := ComplaintMsg{}
@@ -52,7 +54,21 @@ func GetMsgByLimit(start, end int) map[int]ComplaintMsg {
 	iterErr := rows.Err() // get any error encountered during iteration
 	if iterErr != nil {
 		log.Fatal(iterErr)
-		return nil
+		return nil, 0
 	}
-	return msgMap
+	return msgMap, Num / 10
+}
+
+func DoDel(delId int) bool {
+	db := getDb()
+	defer db.Close()
+	query := "delete from complaint where id=?"
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+	defer stmt.Close()
+	stmt.Exec(delId)
+	return true
 }

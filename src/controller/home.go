@@ -10,8 +10,7 @@ func GetHome(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-	currentUser := getCurrentUser(ctx)
 	render(ctx, "index", map[string]interface{}{
-		"user": currentUser,
+		"title": "主页",
 	})
 }

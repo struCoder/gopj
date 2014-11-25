@@ -23,14 +23,6 @@ type loginStatus struct {
 	Msg  string
 }
 
-/**
-	* 存储数据数量, 便于分页
-  *
-*/
-type count struct {
-	Num string
-}
-
 //服务器错误友好提示
 func serverWrong(ctx *web.Context) {
 	ctx.Abort(500, "sory! server wrong")
@@ -38,6 +30,10 @@ func serverWrong(ctx *web.Context) {
 
 //模板渲染
 func render(ctx *web.Context, htmlName string, data map[string]interface{}) {
+	//if htmlName is not account/login we add currentUser by default
+	if htmlName != "account/login" {
+		data["user"] = getCurrentUser(ctx)
+	}
 	t := template.Must(template.ParseFiles(viewsDir+htmlName+htmlExt, "views/header.tmpl", "views/footer.tmpl"))
 	err := t.Execute(ctx.ResponseWriter, data)
 	if err != nil {

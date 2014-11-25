@@ -12,9 +12,8 @@ func GetComplain(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-	currentUser := getCurrentUser(ctx)
 	render(ctx, "complaint/add", map[string]interface{}{
-		"user": currentUser,
+		"title": "业主投诉",
 	})
 }
 
@@ -47,12 +46,11 @@ func DelComplain(ctx *web.Context) {
 		ctx.Redirect(302, "/login")
 		return
 	}
-	currentUser := getCurrentUser(ctx)
 	complaintMsgMap := model.GetMsgByLimit(0, 10)
 
 	render(ctx, "complaint/del", map[string]interface{}{
-		"user":      currentUser,
 		"complaint": complaintMsgMap,
+		"title":     "撤消投诉",
 	})
 }
 
@@ -61,6 +59,11 @@ func PagingComplain(ctx *web.Context) {
 	if !isNum(currentPage) {
 		ctx.Abort(400, "非法访问")
 	}
-	// pageInt := parseInt(currentPage) + 10
-	// complaintMsgMap := model.GetMsgByLimit()
+	endPage := parseInt(currentPage) * 10
+	startPage := endPage - 10
+	complaintMsgMap := model.GetMsgByLimit(startPage, endPage)
+	render(ctx, "complaint/del", map[string]interface{}{
+		"complaint": complaintMsgMap,
+		"title":     "撤消投诉",
+	})
 }

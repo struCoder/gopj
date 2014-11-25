@@ -14,7 +14,9 @@ func GetLogin(ctx *web.Context) {
 		ctx.Redirect(302, "/")
 		return
 	}
-	render(ctx, "account/login", nil)
+	render(ctx, "account/login", map[string]interface{}{
+		"title": "登入",
+	})
 }
 
 /*

@@ -37,7 +37,7 @@ func GetMsgByLimit(start, end int) (map[int]ComplaintMsg, int) {
 	i := 1
 	var Num int
 	db.QueryRow("select count(*) from complaint").Scan(&Num)
-	rows, err := db.Query("select id, name, phone, be_complainted, reason, status from complaint limit ?, ?", start, end)
+	rows, err := db.Query("select id, name, phone, be_complainted, reason, status, deal_person from complaint limit ?, ?", start, end)
 	defer rows.Close()
 	if err != nil || err == sql.ErrNoRows {
 		log.Fatal(err)
@@ -46,7 +46,7 @@ func GetMsgByLimit(start, end int) (map[int]ComplaintMsg, int) {
 	msgMap := make(map[int]ComplaintMsg)
 	comMsgStruct := ComplaintMsg{}
 	for rows.Next() {
-		rows.Scan(&comMsgStruct.Id, &comMsgStruct.Name, &comMsgStruct.Phone, &comMsgStruct.BeComplaint, &comMsgStruct.Reason, &comMsgStruct.Status)
+		rows.Scan(&comMsgStruct.Id, &comMsgStruct.Name, &comMsgStruct.Phone, &comMsgStruct.BeComplaint, &comMsgStruct.Reason, &comMsgStruct.Status, &comMsgStruct.DealPerson)
 		msgMap[i] = comMsgStruct
 		i++
 	}

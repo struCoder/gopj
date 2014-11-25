@@ -97,3 +97,18 @@ func DelComplain(ctx *web.Context) {
 	}
 	returnJson(ctx, status)
 }
+
+func GetTodoComplain(ctx *web.Context) {
+	if !checkLogin(ctx) {
+		ctx.Redirect(302, "/login")
+		return
+	}
+	complaintMsgMap, count := model.GetMsgByLimit(0, 10)
+	render(ctx, "complaint/deal", map[string]interface{}{
+		"complaint": complaintMsgMap,
+		"title":     "投诉处理",
+		"count":     count,
+		"start":     0,
+		"end":       1,
+	})
+}

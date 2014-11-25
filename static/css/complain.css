@@ -38,3 +38,10 @@ body {
 .main-box .table-responsive {
   padding: 5px;
 }
+
+.main-box .table-responsive input {
+  outline: #6daaec;
+  border: 1px solid #d7dbe0;
+  width: 100%;
+  height: 100%;
+}

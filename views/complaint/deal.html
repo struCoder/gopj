@@ -1,0 +1,94 @@
+{{template "header" .}}
+{{define "Css"}}/css/complain.css{{end}}
+<div class="main-box">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>投诉人姓名</th>
+          <th>投诉人电话</th>
+          <th>被投诉人</th>
+          <th>投诉原因</th>
+          <th>处理状态</th>
+          <th>处理人</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range $index, $element := .complaint}}
+          <tr>
+            <td>{{$index}}</td>
+            <td>{{$element.Name}}</td>
+            <td>{{$element.Phone}}</td>
+            <td>{{$element.BeComplaint}}</td>
+            <td>{{$element.Reason}}</td>
+            {{if eq $element.Status "0"}}
+              <td class="danger">
+                <input type="text" value="暂未处理">
+              </td>
+            {{else if eq $element.Status "1"}}
+              <td class="info">
+                <input type="text" value="正在处理">
+              </td>
+            {{else}}
+              <td class="success">
+                <input type="text" value="已经解决">
+              </td>
+            {{end}}
+            <td class="info">
+              <input type="text" value="{{$element.DealPerson}}">
+            </td>
+            <td>
+              <button type="button" class="btn btn-default btn-block"
+               current-data="{{$element.Id}}">更新</button>
+            </td>
+          </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+{{template "footer"}}
+
+<script>
+  var $s;
+  var doRequest = function(data, callback) {
+    $.post('/complaint/todo', data, function(result) {
+      if (result.Code !== 0) {
+        return alert("更新失败: "+result.Msg)
+      }
+      callback(result.Msg)
+    })
+  };
+
+  var clearInfo = function($obj) {
+    setTimeout(function() {
+      $obj.text("更新")
+    }, 2000)
+  }
+  $('button').click(function(ele) {
+    var status = 0;
+    statusStr = $objArr[0].value
+    dealPerson = $objArr[1].value
+    $objArr = $(this).parents("tr").find("input")
+    if (statusStr === "正在处理") {
+      status = 1
+    }
+
+    if (statusStr === "已经解决") {
+      status = 2
+    }
+    var self = this;
+    var currentId = $(this).attr("current-data")
+    var data = {
+      "id": currentId,
+      "status": status,
+      "dealPerson": dealPerson
+    }
+    doRequest(data, function(msg) {
+
+    })
+
+  });
+</script>

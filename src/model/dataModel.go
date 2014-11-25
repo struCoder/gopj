@@ -13,4 +13,5 @@ type ComplaintMsg struct {
 	BeComplaint string
 	Reason      string
 	Status      string
+	DealPerson  string
 }

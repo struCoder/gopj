@@ -23,6 +23,8 @@ func initRouter() {
 	web.Get("/complaint/del", controller.GetComplain)
 	web.Get("/complaint/del/query/", controller.PagingComplain)
 	web.Post("/complaint/del", controller.DelComplain)
+	web.Get("/complaint/status", controller.GetComplain)
+	web.Get("/complaint/todo", controller.GetTodoComplain)
 	// web.Get("/complain/status", controller.StatusComplain)
 	// web.Post("/complain/deal", controller.DealComplain)
 

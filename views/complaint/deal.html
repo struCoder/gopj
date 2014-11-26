@@ -52,7 +52,6 @@
 {{template "footer"}}
 
 <script>
-  var $s;
   var doRequest = function(data, callback) {
     $.post('/complaint/todo', data, function(result) {
       if (result.Code !== 0) {
@@ -69,9 +68,9 @@
   }
   $('button').click(function(ele) {
     var status = 0;
+    $objArr = $(this).parents("tr").find("input")
     statusStr = $objArr[0].value
     dealPerson = $objArr[1].value
-    $objArr = $(this).parents("tr").find("input")
     if (statusStr === "正在处理") {
       status = 1
     }

@@ -112,3 +112,25 @@ func GetTodoComplain(ctx *web.Context) {
 		"end":       1,
 	})
 }
+
+func DoTodoComplain(ctx *web.Context) {
+	if !checkLogin(ctx) {
+		ctx.Redirect(302, "/login")
+		return
+	}
+	id := ctx.Params["id"]
+	status := ctx.Params["status"]
+	dealPerson := ctx.Params["dealPerson"]
+
+	dealStatus := &dealStatus{}
+	IntId := parseInt(id)
+	isSuccess := model.DoUpdate(IntId, status, dealPerson)
+	if isSuccess {
+		dealStatus.Code = 1
+		dealStatus.Msg = "更新成功"
+	} else {
+		dealStatus.Code = 0
+		dealStatus.Msg = "更新失败"
+	}
+	returnJson(ctx, dealStatus)
+}

@@ -72,3 +72,17 @@ func DoDel(delId int) bool {
 	stmt.Exec(delId)
 	return true
 }
+
+func DoUpdate(id int, status, dealPerson string) bool {
+	db := getDb()
+	defer db.Close()
+	query := "UPDATE complaint SET deal_person=?, status=? WHERE id=?"
+	stmt, err := db.Prepare(query)
+	defer stmt.Close()
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+	stmt.Exec(dealPerson, status, id)
+	return true
+}

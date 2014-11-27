@@ -48,14 +48,30 @@
       </tbody>
     </table>
   </div>
+  <div class="paging">
+    <nav>
+      <ul class="pager">
+        {{if lt .start 1}}
+          <li class="previous disabled"><a href="/complaint/del/query/?page={{.start}}">&larr; 上一页</a></li>
+        {{else}}
+          <li class="previous"><a href="/complaint/del/query/?page={{.start}}">&larr; 上一页</a></li>
+        {{end}}
+        {{if gt .end .count}}
+          <li class="next disabled"><a href="/complaint/del/query/?page={{.end}}">下一页 &rarr;</a></li>  
+        {{else}}
+          <li class="next"><a href="/complaint/del/query/?page={{.end}}">下一页 &rarr;</a></li>
+        {{end}}
+      </ul>
+    </nav>
+  </div>
 </div>
 {{template "footer"}}
 
 <script>
   var doRequest = function(data, callback) {
     $.post('/complaint/todo', data, function(result) {
-      if (result.Code !== 0) {
-        return alert("更新失败: "+result.Msg)
+      if (result.Code === 0) {
+        return alert("消息提示: "+result.Msg)
       }
       callback(result.Msg)
     })
@@ -67,17 +83,20 @@
     }, 2000)
   }
   $('button').click(function(ele) {
-    var status = 0;
+    var status;
     $objArr = $(this).parents("tr").find("input")
     statusStr = $objArr[0].value
     dealPerson = $objArr[1].value
     if (statusStr === "正在处理") {
       status = 1
+    } else if (statusStr === "已经解决") {
+      status = 2
+    } else if (statusStr === "暂未处理") {
+      status = 0;
+    } else {
+      alert("状态只能为 已经解决, 正在处理, 暂未处理")
     }
 
-    if (statusStr === "已经解决") {
-      status = 2
-    }
     var self = this;
     var currentId = $(this).attr("current-data")
     var data = {
@@ -87,8 +106,7 @@
       
     }
     doRequest(data, function(msg) {
-
-    })
-
+      alert("消息提示: "+msg)
+    });
   });
 </script>
